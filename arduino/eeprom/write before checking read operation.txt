@@ -1,0 +1,85 @@
+#include <EEPROM.h>
+#include <LiquidCrystal_I2C.h>       // Include LiquidCrystal_I2C library
+ 
+int addr = 0;
+bool exist = false;
+LiquidCrystal_I2C lcd(0x3F, 16, 2);  // Configure LiquidCrystal_I2C library with 0x27 address, 16 columns and 2 rows
+ 
+void setup()
+{
+   lcd.begin(0, 2);                   // Initialize I2C LCD module (SDA = GPIO0, SCL = GPIO2)
+   lcd.init();
+ 
+   lcd.backlight();                   // Turn backlight ON
+  
+  EEPROM.begin(512);  //Initialize EEPROM
+ 
+  // write to EEPROM if not available
+  if(char(EEPROM.read(addr)) == 'a')
+    {exist = true; }
+   else
+   {  EEPROM.write(addr, 'a');   EEPROM.commit(); }
+
+  lcd.setCursor(0, 0);
+  if(exist)
+    { lcd.print("in memory exist"); }
+  else
+  { lcd.print(char(EEPROM.read(addr))); }
+
+  exist = false;
+  
+  //addr++;                      //Increment address
+  //EEPROM.write(addr, 'b');   
+  //addr++;                      //Increment address
+  //EEPROM.write(addr, 'C');    
+
+ String strText;  
+ String sample = "testing eeprom";
+ 
+ for(int i=0;i<14;i++) 
+  {
+    strText = strText + char(EEPROM.read(0x0F+i)); //Read one by one with starting address of 0x0F    
+  }  
+
+
+  if(strText == sample)
+   {exist = true; }
+  else 
+  {
+    for(int i=0;i<sample.length();i++)
+    {
+      EEPROM.write(0x0F+i, sample[i]); //Write one by one with starting address of 0x0F
+    }
+    EEPROM.commit();    //Store data to EEPROM  
+  }
+  
+  lcd.setCursor(0, 1);
+  if(exist)
+    { lcd.print("in memory exist"); }
+  else
+  { 
+    String readingVar;
+    for(int i=0;i<14;i++) 
+    {
+      readingVar = readingVar + char(EEPROM.read(0x0F+i)); //Read one by one with starting address of 0x0F    
+    }
+  
+    lcd.print(readingVar);  //Print the text
+  }
+  
+  
+  addr = 0;
+
+  //addr++;                      //Increment address
+  //Serial.print(char(EEPROM.read(addr)));
+  //addr++;                      //Increment address
+  //Serial.println(char(EEPROM.read(addr)));
+ 
+  //Read string from eeprom (testing eeprom)
+   
+  
+}
+ 
+void loop()
+{   
+}
