@@ -9,8 +9,6 @@ char numberStr[10] = "000000000";
 void setup() {
   Serial.begin(19200);
   Serial.println("AT+IPR=19200");
-
-  while (!Serial);
   
   lcd.begin(0, 2);
   lcd.init();
@@ -54,3 +52,15 @@ void numToStr(int X, char stringVar[10])
       indx--;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
