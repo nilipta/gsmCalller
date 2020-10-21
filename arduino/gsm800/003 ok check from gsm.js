@@ -49,13 +49,13 @@ void loop() {
         //if the msg contains okay then
         if(okayFind(responseStr[0], responseStr[1], responseStr[2], responseStr[3]))
         {
-          myPrint(1, "Okay replay....");
+          myPrint(1, "Okay reply.......");
           break;
         }
         else{ //if the msg is not okay then...
           desiredCharFlag = false;
           index = 0;
-          myPrint(1, "not Okay reply...");
+          myPrint(1, "not Okay reply.....");
         }
       }
     }
@@ -106,3 +106,16 @@ bool myPrint(int line, char msg[20])
     lcd.setCursor(0, line);
     lcd.print(msg);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

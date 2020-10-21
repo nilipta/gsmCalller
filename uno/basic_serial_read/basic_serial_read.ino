@@ -8,6 +8,6 @@ void loop() {
 
   while (Serial.available())
     {
-    Serial.write(Serial.read());
+    Serial.println(Serial.read());
     }
 }
